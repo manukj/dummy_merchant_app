@@ -1,27 +1,14 @@
 var dsBridge = require("dsbridge");
 function onSSOFlow() {
-  try {
-    dsBridge.call("synapse.onSSOFlow", "");
-  } catch (e) {
-    console.log(`Call to native method onSoSFlow failed !`);
-  }
+  dsBridge.call("synapse.onSSOFlow", "").catch((err) => {
+    console.log(`Call to native method onSoSFlow failed ! ${err}`); // Make sure cb gets the error
+  });
 }
-
-function onPermissionRequest(permission) {
-  let data = {};
-  try {
-    data = dsBridge.call("synapse.onPermissionRequest",permission);
-  } catch (e) {
-    console.log(`Call to native method onPermissionRequest failed !`);
-  }
-  console.log(`data recieved onPermissionRequest! ${data}`);
-  return true;
-}
-
+//cartReviewData is an instant of CartReviewData
 function openCartReview(cartReviewData) {
-  try {
-    dsBridge.call("synapse.openCartReview", cartReviewData);
-  } catch (e) {
-    console.log(`Call to native method openCartReview failed !`);
-  }
+  dsBridge
+    .call("synapse.openCartReview", JSON.stringify(cartReviewData))
+    .catch((err) => {
+      console.log(`Call to native method openCartReview failed ! ${err}`); // Make sure cb gets the error
+    });
 }
